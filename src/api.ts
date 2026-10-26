@@ -51,7 +51,7 @@ function parseFieldErrors(body: any): Record<string, string> {
 }
 
 async function request<T = any>(method: string, path: string, opts: { body?: unknown; query?: Record<string, string | undefined>; silent?: boolean } = {}): Promise<T> {
-  const url = new URL(BASE.replace(/\/$/, '') + path);
+  const url = new URL(BASE.replace(/\/$/, '') + path, window.location.origin);
   Object.entries(opts.query ?? {}).forEach(([k, v]) => { if (v) url.searchParams.set(k, v); });
   const headers: Record<string, string> = { Accept: 'application/json' };
   if (opts.body !== undefined) headers['Content-Type'] = 'application/json';
